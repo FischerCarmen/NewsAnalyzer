@@ -55,4 +55,6 @@ public class Analyzer {
         return shortestAuthor.getAuthor();
     }
 
+    //leider keine Ahnung was unter "Sortieren Sie den Titel nach dem längsten Titel nach dem Alphabet." zu verstehen ist
+
 }
