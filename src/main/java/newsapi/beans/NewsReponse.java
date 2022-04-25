@@ -23,7 +23,7 @@ public class NewsReponse {
     @JsonProperty("totalResults")
     private Integer totalResults;
     @JsonProperty("articles")
-    private List<Article> articles = null;
+    private static List<Article> articles = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
