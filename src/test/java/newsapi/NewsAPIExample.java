@@ -1,5 +1,7 @@
 package newsapi;
 
+//https://github.com/FischerCarmen/NewsAnalyzer.git
+
 import newsapi.beans.Article;
 import newsapi.beans.NewsApiException;
 import newsapi.beans.NewsReponse;
