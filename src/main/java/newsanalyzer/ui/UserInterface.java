@@ -4,6 +4,8 @@ package newsanalyzer.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import newsanalyzer.ctrl.Controller;
 import newsapi.NewsApi;
@@ -12,11 +14,14 @@ import newsapi.NewsApiBuilder;
 import newsapi.enums.Category;
 import newsapi.enums.Country;
 import newsapi.enums.Endpoint;
+import newsreader.downloader.SequentialDownloader;
+import newsreader.downloader.ParallelDownloader;
 
 public class UserInterface 
 {
 
 	private Controller ctrl = new Controller();
+	private List<String> urls = new ArrayList<>();
 
 	public void getDataFromCtrl1(){
 		NewsApi newsApi = new NewsApiBuilder()
@@ -26,6 +31,7 @@ public class UserInterface
 				.setSourceCategory(Category.science)
 				.createNewsApi();
 		try {
+			urls.add(saveSearch(newsApi));
 			ctrl.process(newsApi);
 		}catch (NewsApiException e) {
 			System.out.println("Error: "+ e.getMessage());
@@ -40,6 +46,7 @@ public class UserInterface
 				.setSourceCategory(Category.business)
 				.createNewsApi();
 		try {
+			urls.add(saveSearch(newsApi));
 			ctrl.process(newsApi);
 		}catch (NewsApiException e) {
 			System.out.println("Error: "+ e.getMessage());
@@ -55,6 +62,7 @@ public class UserInterface
 				.setSourceCategory(Category.technology)
 				.createNewsApi();
 		try {
+			urls.add(saveSearch(newsApi));
 			ctrl.process(newsApi);
 		}catch (NewsApiException e) {
 			System.out.println("Error: "+ e.getMessage());
@@ -82,6 +90,7 @@ public class UserInterface
 				.setSourceCategory(category)
 				.createNewsApi();
 		try {
+			urls.add(saveSearch(newsApi));
 			ctrl.process(newsApi);
 		}catch (NewsApiException e) {
 			System.out.println("Error: "+ e.getMessage());
@@ -96,6 +105,7 @@ public class UserInterface
 		menu.insert("b", "Choice Bitcoin in business", this::getDataFromCtrl2);
 		menu.insert("c", "Choice Computer Science in technology", this::getDataFromCtrl3);
 		menu.insert("d", "Choice Custom Input in business (1), entertainment (2), health (3), science (4), sports (5) or technology (6)",this::getDataForCustomInput);
+		menu.insert("e", "Choice Download last searches",this::downloadLastSearch );
 		menu.insert("q", "Quit", null);
 		Runnable choice;
 		while ((choice = menu.exec()) != null) {
@@ -135,5 +145,14 @@ public class UserInterface
 			}
 		}
 		return number;
+	}
+
+	public void downloadLastSearch(){
+		SequentialDownloader.process(urls);
+		ParallelDownloader.process(urls);
+	}
+
+	public String saveSearch(NewsApi newsApi){
+		return newsApi.toString();
 	}
 }

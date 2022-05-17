@@ -201,5 +201,14 @@ public class NewsApi {
         }
         return newsReponse;
     }
+
+    @Override
+    public String toString() {
+        try{
+            return this.buildURL();
+        }catch (NewsApiException e) {
+            return "Error: "+ e.getMessage();
+        }
+    }
 }
 
