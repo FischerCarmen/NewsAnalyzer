@@ -148,8 +148,9 @@ public class UserInterface
 	}
 
 	public void downloadLastSearch(){
-		SequentialDownloader.process(urls);
-		ParallelDownloader.process(urls);
+		SequentialDownloader sd = new SequentialDownloader();
+		ParallelDownloader pd = new ParallelDownloader();
+		sd.process(urls);
 	}
 
 	public String saveSearch(NewsApi newsApi){
